@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   deploy:
+    if: false # disabled, using external public repo deployment
     environment:
       name: github-pages
     runs-on: ubuntu-latest

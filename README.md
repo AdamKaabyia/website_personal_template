@@ -1,10 +1,16 @@
 # Resume Website
 
-This is a simple, responsive single-page resume website. Edit `index.html` and `style.css` to personalise with your information.
+> **This repository is a template.** Fork or clone it, then replace the placeholder text and images with your own details. Nothing in the `references/` directory ships to production – it is excluded via `.gitignore`.
 
 ## Local development
 
-No build step is required. Simply open `index.html` in your browser to preview your changes.
+No build step is required. Simply open `index.html` in your browser or use a lightweight dev-server such as:
+
+```bash
+npx serve .
+```
+
+Hot-reloading isn’t needed but you may add a bundler (Vite, Parcel, etc.) if you grow the project.
 
 ## Deployment to GitHub Pages
 
@@ -22,4 +28,48 @@ Your resume will be available at:
 https://<your-username>.github.io/<repository-name>/
 ```
 
-Replace `<your-username>` and `<repository-name>` with your actual GitHub username and repository name.
+If you prefer keeping the source private while publishing the generated site to a *different* public repository, leave the `deploy-public.yml` workflow in place and set the two secrets it requires (`GH_PAGES_PAT` and `PUBLIC_REPO`).
+
+---
+
+## Customising the template
+
+| Area | How to update |
+|------|---------------|
+| **Name & tagline** | Edit the `<header>` in `index.html`. |
+| **Hero section** | The greeting, type-writer effect and call-to-action live in the `#hero` section. |
+| **Sections & timeline** | Each major CV section is its own `<section>` – remove, rename or reorder as needed. |
+| **Project thumbnails** | URLs are stored in `data-bg` attributes – swap them for your own hosted images (local or remote). |
+| **Accent colour** | Change `--primary` inside `style.css`. |
+| **Fonts** | The default uses *Poppins* – import any Google Font you like in `<head>`. |
+
+### Making it **unique**
+
+1. **Brand colour** – update the `--primary` variable and watch the entire palette shift.
+2. **Photography** – replace the Unsplash placeholders with your own screenshots.
+3. **Micro-animations** – many elements have classes like `.reveal` that fade in. Add your own keyframes to stand out.
+4. **Custom sections** – passion projects, testimonials, writing, anything that sells *you*.
+
+---
+
+## Removing `references/`
+
+The bulky stock images and external site clones originally shipped in `references/`. That folder is now ignored by Git and **not** deployed. Feel free to delete it locally to save disk space:
+
+```bash
+rm -rf references/
+```
+
+If you had already committed it, run
+
+```bash
+git rm -r --cached references
+git commit -m "Remove references directory"
+git push
+```
+
+---
+
+## License
+
+This template is released under the MIT License – modify and use it without restriction.

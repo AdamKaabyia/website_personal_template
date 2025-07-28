@@ -155,3 +155,48 @@ window.addEventListener('load', () => {
     setTimeout(() => pre.remove(), 500);
   }
 });
+
+// Simple typing effect for hero section
+document.addEventListener('DOMContentLoaded', () => {
+  const typedSpan = document.getElementById('typedText');
+  if (!typedSpan) return;
+
+  const phrases = [
+    'a Web Developer',
+    'a Designer',
+    'an Open-Source Enthusiast'
+  ];
+
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let typing = true;
+
+  const typeSpeed = 100;
+  const eraseSpeed = 50;
+  const pause = 1800;
+
+  function type() {
+    if (charIndex < phrases[phraseIndex].length) {
+      typedSpan.textContent += phrases[phraseIndex].charAt(charIndex);
+      charIndex++;
+      setTimeout(type, typeSpeed);
+    } else {
+      typing = false;
+      setTimeout(erase, pause);
+    }
+  }
+
+  function erase() {
+    if (charIndex > 0) {
+      typedSpan.textContent = phrases[phraseIndex].substring(0, charIndex - 1);
+      charIndex--;
+      setTimeout(erase, eraseSpeed);
+    } else {
+      typing = true;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      setTimeout(type, typeSpeed);
+    }
+  }
+
+  type();
+});

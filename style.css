@@ -165,48 +165,21 @@ footer {
 .timeline li::before {
   content: "";
   position: absolute;
-  left: -4px;
-  top: 0.3rem;
-  width: 12px;
-  height: 12px;
+  left: 1px; /* center on timeline line */
+  top: 1rem; /* vertical alignment */
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--bg-light);
-  border: 3px solid var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: 0 0 6px 2px rgba(30, 144, 255, 0.6);
 }
 .timeline-content {
   background: #fff;
   padding: 1rem 1.25rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-@media (prefers-color-scheme: dark) {
-  .timeline-content {
-    background: #161b22;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  }
-}
-.timeline .date {
-  font-size: 0.85rem;
-  color: #666;
-}
-
-/* Skills */
-.skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.skill {
-  background: rgba(30, 144, 255, 0.1);
-  color: var(--primary);
-  padding: 0.3rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-}
-.skill:hover {
-  background: var(--primary);
-  color: #fff;
+  margin-left: 1.25rem; /* more space so bullet never overlaps */
 }
 
 /* Reveal Animation */
@@ -493,3 +466,19 @@ footer {
   transition: color 0.3s ease;
 }
 .social-links a:hover { color: #ffe478; }
+
+/* Template banner */
+.template-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ffe478;
+  color: #000;
+  text-align: center;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 2000;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+}

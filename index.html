@@ -8,11 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-3hTHYOTmWMY0EKPzNgKoYkkp2q+xDZnue7u6Yual+VcrYSVWhv9K+J3oaMqkZP2oRX+45z8foO6lsKiC5HnlNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <meta name="color-scheme" content="light dark" />
 </head>
 <body>
+  <div id="scrollProgress"></div>
   <header>
     <h1>Your Name</h1>
     <p>Web Developer | Open Source Enthusiast</p>
@@ -24,7 +26,21 @@
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
+    <ul class="social-links">
+      <li><a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a></li>
+      <li><a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+    </ul>
   </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero snap">
+    <canvas id="stars"></canvas>
+    <div class="hero-content">
+      <h2>Hello, I'm <span class="highlight">Your Name</span></h2>
+      <h3><span id="typedText"></span><span class="cursor">|</span></h3>
+      <a href="#projects" class="btn-cta">See My Work</a>
+    </div>
+  </section>
 
   <section id="about" class="reveal">
     <h2>About Me</h2>
@@ -74,6 +90,45 @@
       <span class="skill">Git</span>
     </div>
   </section>
+
+  <section id="projects" class="reveal">
+    <h2>Projects</h2>
+    <div class="project-filters">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="ecommerce">E-commerce</button>
+      <button class="filter" data-filter="education">Education</button>
+      <button class="filter" data-filter="events">Events</button>
+    </div>
+    <div class="portfolio-items-wrapper">
+      <div class="portfolio-item-wrapper" data-category="ecommerce">
+        <div class="portfolio-img-background" data-bg="portfolio-html-site/images/portfolio1.jpg" aria-label="Quip Ecommerce image"></div>
+        <div class="img-text-wrapper">
+          <div class="subtitle">Quip Ecommerce platform – Top 25 Invention by Time Magazine 2016</div>
+        </div>
+      </div>
+      <div class="portfolio-item-wrapper" data-category="education">
+        <div class="portfolio-img-background" data-bg="portfolio-html-site/images/portfolio2.jpg" aria-label="Bootcamp image"></div>
+        <div class="img-text-wrapper">
+          <div class="subtitle">Coding bootcamp & learning management system</div>
+        </div>
+      </div>
+      <div class="portfolio-item-wrapper" data-category="events">
+        <div class="portfolio-img-background" data-bg="portfolio-html-site/images/portfolio3.jpg" aria-label="Eventbrite image"></div>
+        <div class="img-text-wrapper">
+          <div class="subtitle">Eventbrite – leading event management platform</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Lightbox Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="modalImage" alt="Project image" />
+      <p id="modalCaption"></p>
+    </div>
+  </div>
 
   <section id="contact" class="reveal">
     <h2>Contact</h2>

@@ -30,3 +30,128 @@ if (revealElements.length) {
 
   revealElements.forEach((el) => io.observe(el));
 }
+
+// Portfolio hover blur effect
+const portfolioItems = document.querySelectorAll('.portfolio-item-wrapper');
+
+portfolioItems.forEach((item) => {
+  const bg = item.querySelector('.portfolio-img-background');
+  item.addEventListener('mouseover', () => bg && bg.classList.add('image-blur'));
+  item.addEventListener('mouseout', () => bg && bg.classList.remove('image-blur'));
+});
+
+// Scroll progress bar
+const progressBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / docHeight) * 100;
+  progressBar.style.width = scrolled + '%';
+});
+
+// Card tilt effect
+portfolioItems.forEach((item) => {
+  item.addEventListener('mousemove', (e) => {
+    const rect = item.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotateX = (-y / (rect.height / 2)) * 6;
+    const rotateY = (x / (rect.width / 2)) * 6;
+    item.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  item.addEventListener('mouseleave', () => {
+    item.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+  });
+});
+
+// Project filters
+const filters = document.querySelectorAll('.filter');
+filters.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    filters.forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    const category = btn.dataset.filter;
+    portfolioItems.forEach((item) => {
+      const itemCat = item.dataset.category;
+      if (category === 'all' || itemCat === category) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Modal / lightbox
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImage');
+const modalCaption = document.getElementById('modalCaption');
+const closeModal = modal ? modal.querySelector('.close') : null;
+
+if (modal) {
+  portfolioItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      const bg = item.querySelector('.portfolio-img-background');
+      if (!bg) return;
+      const url = bg.style.backgroundImage.slice(5, -2);
+      modalImg.src = url;
+      modalCaption.textContent = item.querySelector('.subtitle')?.textContent || '';
+      modal.classList.add('show');
+    });
+  });
+
+  closeModal.addEventListener('click', () => modal.classList.remove('show'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+}
+
+// Header shrink on scroll
+const siteHeader = document.querySelector('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    siteHeader.classList.add('shrink');
+  } else {
+    siteHeader.classList.remove('shrink');
+  }
+});
+
+// Scroll-spy active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('header nav a');
+
+const spyObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        navLinks.forEach((l) => l.classList.remove('active'));
+        const active = document.querySelector(`header nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  },
+  { rootMargin: '-50% 0px -50% 0px' }
+);
+sections.forEach((sec) => spyObserver.observe(sec));
+
+// Lazy-load portfolio background images
+const lazyBgObserver = new IntersectionObserver((entries, obs) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const bg = el.dataset.bg;
+      if (bg) el.style.backgroundImage = `url(${bg})`;
+      obs.unobserve(el);
+    }
+  });
+});
+
+document.querySelectorAll('.portfolio-img-background[data-bg]').forEach((el) => lazyBgObserver.observe(el));
+
+// Preloader fade
+window.addEventListener('load', () => {
+  const pre = document.getElementById('preloader');
+  if (pre) {
+    pre.classList.add('fade-out');
+    setTimeout(() => pre.remove(), 500);
+  }
+});

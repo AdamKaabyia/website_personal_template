@@ -21,6 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Verify PAT secret
+        run: |
+          if [ -z "${{ secrets.GH_PAGES_PAT }}" ]; then
+            echo "::error title=Missing PAT::GH_PAGES_PAT secret is not set. Pages deployment aborted."
+            exit 1
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:

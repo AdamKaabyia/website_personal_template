@@ -17,31 +17,18 @@ permissions:
 
 jobs:
   deploy:
-    if: false # disabled, using external public repo deployment
     environment:
       name: github-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Verify PAT secret
-        run: |
-          if [ -z "${{ secrets.GH_PAGES_PAT }}" ]; then
-            echo "::error title=Missing PAT::GH_PAGES_PAT secret is not set. Pages deployment aborted."
-            exit 1
-          fi
+      # No build step required; site consists of static assets in repository root
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          enablement: true
-          token: ${{ secrets.GH_PAGES_PAT }}
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
+          force_orphan: true

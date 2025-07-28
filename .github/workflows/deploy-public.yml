@@ -1,0 +1,25 @@
+name: Deploy to Public GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # No build step; if you add one (e.g. npm build) place here
+
+      - name: Push to public portfolio repo
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.GH_PAGES_PAT }}
+          publish_dir: ./
+          external_repository: ${{ secrets.PUBLIC_REPO }}
+          publish_branch: main
+          force_orphan: true

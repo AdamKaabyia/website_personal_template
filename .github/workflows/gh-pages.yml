@@ -2,33 +2,51 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      build_message:
-        description: "Optional description for this deploy"
-        required: false
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   deploy:
-    environment:
-      name: github-pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # No build step required; site consists of static assets in repository root
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          publish_branch: gh-pages
-          force_orphan: true
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test deployed site
+        run: |
+          echo "Testing site deployment..."
+          for i in {1..5}; do
+            if curl -f -s https://adamkaabyia.github.io/website_personal_template/ | grep -q "Your Name"; then
+              echo "✅ Site is live and contains expected content"
+              exit 0
+            fi
+            echo "⏳ Attempt $i failed, waiting 30s..."
+            sleep 30
+          done
+          echo "❌ Site failed to deploy correctly"
+          exit 1

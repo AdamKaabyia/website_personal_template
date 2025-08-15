@@ -4,13 +4,7 @@
 
 ## Local development
 
-No build step is required. Simply open `index.html` in your browser or use a lightweight dev-server such as:
-
-```bash
-npx serve .
-```
-
-Hot-reloading isn’t needed but you may add a bundler (Vite, Parcel, etc.) if you grow the project.
+No build step is required. Simply open `index.html` in your browser.
 
 ## Deployment to GitHub Pages
 

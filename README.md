@@ -1,6 +1,6 @@
 # Resume Website
 
-> **This repository is a template.** Fork or clone it, then replace the placeholder text and images with your own details. Nothing in the `references/` directory ships to production – it is excluded via `.gitignore`.
+> **This repository is a template.** Fork or clone it, then replace the placeholder text and images with your own details. 
 
 ## Local development
 
